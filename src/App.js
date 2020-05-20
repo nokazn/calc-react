@@ -21,10 +21,11 @@ export class App extends React.Component {
       opes: ['', ''],
       provisionalNum: '',
       provisionalOpe: '',
-      tmpFormula: {
-        num: '',
-        ope: ''
-      },
+      provisionalTmpFormulaNum: '',
+      tmpFormulaHistory: {
+        nums: [],
+        opes: [],
+      }
     }
 
     this.onNum = this.onNum.bind(this);
@@ -43,41 +44,61 @@ export class App extends React.Component {
    * @param {string} num - /[0-9]|\./
    */
   onNum(inputNum) {
-    const { provisionalNum, provisionalOpe, opes } = this.state;
+    const {
+      provisionalNum,
+      provisionalOpe,
+      opes,
+      tmpFormulaHistory
+    } = this.state;
     const enqueuedOpes = enqueue(opes, provisionalOpe);
-    const addedProvisionalNum = provisionalNum === '0'
+    const updatedProvisionalNum = provisionalNum === '0'
       ? inputNum
-      : provisionalNum + inputNum;
+      : `${provisionalNum}${inputNum}`;
+    const updatedTmpFormulaHistory = {
+      ...tmpFormulaHistory,
+      opes: [...tmpFormulaHistory.opes, enqueuedOpes[1]]
+    };
 
     this.setState(() => {
-      if (!provisionalOpe) return { provisionalNum: addedProvisionalNum }
+      if (!provisionalOpe) return { provisionalNum: updatedProvisionalNum }
 
       // 仮の二項演算子が確定する
       return {
         opes: enqueuedOpes,
         provisionalOpe: '',
-        provisionalNum: addedProvisionalNum
+        provisionalNum: updatedProvisionalNum,
+        tmpFormulaHistory: updatedTmpFormulaHistory,
       };
     })
   }
 
   onPeriod(period) {
-    const { provisionalNum, provisionalOpe, opes } = this.state;
+    const {
+      provisionalNum,
+      provisionalOpe,
+      opes,
+      tmpFormulaHistory
+    } = this.state;
     if (provisionalNum.includes('.')) return;
 
     const enqueuedOpes = enqueue(opes, provisionalOpe);
-    const addedProvisionalNum = provisionalNum === ''
+    const updatedProvisionalNum = provisionalNum === ''
       ? `0${period}`
       : `${provisionalNum}${period}`;
+    const updatedTmpFormulaHistory = {
+      ...tmpFormulaHistory,
+      opes: [...tmpFormulaHistory.opes, enqueuedOpes[1]]
+    };
 
     this.setState(() => {
-      if (!provisionalOpe) return { provisionalNum: addedProvisionalNum }
+      if (!provisionalOpe) return { provisionalNum: updatedProvisionalNum }
 
       // 仮の二項演算子が確定する
       return {
         opes: enqueuedOpes,
         provisionalOpe: '',
-        provisionalNum: addedProvisionalNum
+        provisionalNum: updatedProvisionalNum,
+        tmpFormulaHistory: updatedTmpFormulaHistory,
       };
     })
   }
@@ -87,7 +108,14 @@ export class App extends React.Component {
    * @param {string} - '+' | '-' | '*' | '/'
    */
   onBinaryOpe(inputOpe) {
-    const { provisionalNum, nums, provisionalOpe, opes, tmpFormula } = this.state;
+    const {
+      provisionalNum,
+      nums,
+      provisionalOpe,
+      opes,
+      provisionalTmpFormulaNum,
+      tmpFormulaHistory,
+    } = this.state;
     const inputNum = provisionalNum || nums[1] || '0';
     const enqueuedNums = enqueue(nums, inputNum);
 
@@ -100,14 +128,15 @@ export class App extends React.Component {
         nums: enqueuedNums,
         provisionalNum: '',
         provisionalOpe: inputOpe,
-        tmpFormula: {
-          num: tmpFormula.num || inputNum,
-          ope: inputOpe
+        provisionalTmpFormulaNum: '',
+        tmpFormulaHistory: {
+          ...tmpFormulaHistory,
+          nums: [...tmpFormulaHistory.nums, provisionalTmpFormulaNum || inputNum],
         },
       };
     });
     // @todo
-    if (isCalculatable(enqueuedNums, opes)) {
+    if (isCalculatable(enqueuedNums, opes[1])) {
       this.calc(enqueuedNums, opes[1])
     };
   }
@@ -139,6 +168,7 @@ export class App extends React.Component {
         };
       },
       square ({ formula, value }) {
+        console.log({ formula })
         return {
           formula: `sqr(${formula})`,
           value: String(Math.pow(value, 2))
@@ -158,20 +188,23 @@ export class App extends React.Component {
         };
       }
     };
-    const { provisionalNum, nums, tmpFormula } = this.state;
+    const {
+      provisionalNum,
+      nums,
+      provisionalTmpFormulaNum,
+    } = this.state;
     // 入力中の値か、なければ前回の答えを計算して入力値を更新
     const inputNum = provisionalNum || nums[1] || '0';
     const answer = handlers[type]({
-      formula: tmpFormula.num || inputNum,
+      // @todo
+      formula: provisionalTmpFormulaNum || inputNum,
       value: parseFloat(inputNum),
     });
 
-    this.setState(({ tmpFormula }) => ({
+    console.log({ answer })
+    this.setState(() => ({
       provisionalNum: answer.value,
-      tmpFormula: {
-        ...tmpFormula,
-        num: answer.value,
-      },
+      provisionalTmpFormulaNum: answer.formula,
     }));
   }
 
@@ -183,7 +216,14 @@ export class App extends React.Component {
     const enqueuedNum = provisionalNum || nums[provisionalOpe ? 1 : 0];
     const enqueuedNums = enqueue(nums, enqueuedNum);
     if (opes[1]) {
-      this.setState({ nums: enqueuedNums });
+      this.setState({
+        nums: enqueuedNums,
+        provisionalTmpFormulaNum: '',
+        tmpFormulaHistory: {
+          nums: [],
+          opes: [],
+        },
+      });
       this.calc(enqueuedNums, opes[1]);
     } else {
       // 仮の二項演算子がない場合 (答えが出た後 onEqu が呼ばれた場合) は前回の入力値を採用
@@ -192,6 +232,11 @@ export class App extends React.Component {
         nums: enqueuedNums,
         opes: enqueuedOpes,
         ope: '',
+        provisionalTmpFormulaNum: '',
+        tmpFormulaHistory: {
+          nums: [],
+          opes: [],
+        },
       });
       this.calc(enqueuedNums, enqueuedOpes[1]);
     }
@@ -210,6 +255,11 @@ export class App extends React.Component {
       opes: dequeuedOpes,
       provisionalNum: '',
       provisionalOpe: '',
+      provisionalTmpFormulaNum: '',
+      tmpFormulaHistory: {
+        nums: [],
+        opes: [],
+      },
     }));
   }
 
@@ -217,12 +267,9 @@ export class App extends React.Component {
    * 入力中の数字をリセットする
    */
   onCancel () {
-    this.setState(({ tmpFormula }) => ({
-      provisionalNum: '0',
-      tmpFormula: {
-        ...tmpFormula,
-        num: '',
-      },
+    this.setState(() => ({
+      provisionalNum: '',
+      provisionalTmpFormulaNum: '',
     }));
   }
 
@@ -230,6 +277,9 @@ export class App extends React.Component {
    * 直近で入力した数字を削除する
    */
   onBackSpace () {
+    const { provisionalTmpFormulaNum} = this.state;
+    if (provisionalTmpFormulaNum !== '') return;
+
     this.setState(({ provisionalNum }) => ({
       provisionalNum: provisionalNum.length === 1
         ? '0' 
@@ -255,6 +305,16 @@ export class App extends React.Component {
   }
   
   render() {
+    const {
+      provisionalOpe,
+      provisionalTmpFormulaNum,
+      tmpFormulaHistory
+    } = this.state;
+    const provisionalTmpFormula = tmpFormulaHistory.nums.map((num, i) => {
+      const ope = tmpFormulaHistory.opes[i];
+      return `${num}${ope ?? ''}`;
+    }).join('') + provisionalOpe + provisionalTmpFormulaNum;
+    console.log(provisionalTmpFormula);
     const CalcButton = buttonList.map((button) => (
       <Button
         key={button.name}
@@ -270,9 +330,9 @@ export class App extends React.Component {
       <>
         <div className="box-container">
           <div
-            id="tmpFormulaBox"
-            className="box tmp-formula-box">
-            <span>{'aa'}</span>
+            id="tmpFormulaHistoryBox"
+            className="box tmp-formula-history-box">
+            <span>{provisionalTmpFormula}</span>
           </div>
 
           <div
