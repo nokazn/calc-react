@@ -218,6 +218,7 @@ export class App extends React.Component {
     if (opes[1]) {
       this.setState({
         nums: enqueuedNums,
+        provisionalOpe: '',
         provisionalTmpFormulaNum: '',
         tmpFormulaHistory: {
           nums: [],
@@ -231,7 +232,7 @@ export class App extends React.Component {
       this.setState({
         nums: enqueuedNums,
         opes: enqueuedOpes,
-        ope: '',
+        provisionalOpe: '',
         provisionalTmpFormulaNum: '',
         tmpFormulaHistory: {
           nums: [],
