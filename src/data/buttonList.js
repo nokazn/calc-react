@@ -157,7 +157,7 @@ export default [
     name: '.',
     content: '.',
     className: 'unary-ope-button',
-    handler: 'onNum',
+    handler: 'onPeriod',
     arg: '.'
   },
   {

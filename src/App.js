@@ -5,16 +5,9 @@ import { enqueue } from './utils/enqueue';
 import { dequeue } from './utils/dequeue';
 import { convertToZero } from './utils/convertToZero';
 import { addComma } from './utils/addComma';
+import { isCalculatable } from './utils/isCalculatable';
 import { calc } from './utils/calc';
-import { OPE_LIST } from './constant';
 import './App.css';
-
-const isCalculatable = (nums, ope) => {
-  return !Number.isNaN(parseFloat(nums[0]))
-    && !Number.isNaN(parseFloat(nums[1]))
-    && OPE_LIST.some((availableOpe) => ope === availableOpe);
-}
-
 
 
 export class App extends React.Component {
@@ -35,6 +28,7 @@ export class App extends React.Component {
     }
 
     this.onNum = this.onNum.bind(this);
+    this.onPeriod = this.onPeriod.bind(this);
     this.onBinaryOpe = this.onBinaryOpe.bind(this);
     this.onUnaryOpe = this.onUnaryOpe.bind(this);
     this.onEqu = this.onEqu.bind(this);
@@ -54,6 +48,27 @@ export class App extends React.Component {
     const addedProvisionalNum = provisionalNum === '0'
       ? inputNum
       : provisionalNum + inputNum;
+
+    this.setState(() => {
+      if (!provisionalOpe) return { provisionalNum: addedProvisionalNum }
+
+      // 仮の二項演算子が確定する
+      return {
+        opes: enqueuedOpes,
+        provisionalOpe: '',
+        provisionalNum: addedProvisionalNum
+      };
+    })
+  }
+
+  onPeriod(period) {
+    const { provisionalNum, provisionalOpe, opes } = this.state;
+    if (provisionalNum.includes('.')) return;
+
+    const enqueuedOpes = enqueue(opes, provisionalOpe);
+    const addedProvisionalNum = provisionalNum === ''
+      ? `0${period}`
+      : `${provisionalNum}${period}`;
 
     this.setState(() => {
       if (!provisionalOpe) return { provisionalNum: addedProvisionalNum }
@@ -171,8 +186,8 @@ export class App extends React.Component {
       this.setState({ nums: enqueuedNums });
       this.calc(enqueuedNums, opes[1]);
     } else {
-      const enqueuedOpes = enqueue(opes, provisionalOpe || opes[0]);
       // 仮の二項演算子がない場合 (答えが出た後 onEqu が呼ばれた場合) は前回の入力値を採用
+      const enqueuedOpes = enqueue(opes, provisionalOpe || opes[0]);
       this.setState({
         nums: enqueuedNums,
         opes: enqueuedOpes,
@@ -257,7 +272,7 @@ export class App extends React.Component {
           <div
             id="tmpFormulaBox"
             className="box tmp-formula-box">
-            <span>{}</span>
+            <span>{'aa'}</span>
           </div>
 
           <div
