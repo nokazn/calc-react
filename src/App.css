@@ -1,38 +1,100 @@
-.App {
-  text-align: center;
+body {
+  margin: 0;
+  background-color: #e6e6e6;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+div.container {
+  width: 100vw;
+  height: 100vh;
+  min-width: 300px;
+  min-height: 400px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+div.box-container {
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  width: 100vw;
+  height: 30vh;
+  padding: 5vh 0 5vh;
+  box-sizing: border-box;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+div.box-container div.box {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: flex-end;
+  align-items:  center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 2% 0;
 }
 
-.App-link {
-  color: #61dafb;
+div.box-container div.tmp-formula-box {
+  font-size: 16px;
+  color: #a9a9a9;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+div.box-container div.answer-box {
+  font-weight: bold;
+}
+
+@media (max-width: 767px) {
+  div.box-container div.answer-box {
+    font-size: 48px;
   }
-  to {
-    transform: rotate(360deg);
+}
+@media (min-width: 788px) {
+  div.box-container div.answer-box {
+    font-size: 60px;
   }
+}
+
+div.buttons-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  height: 70%;
+}
+
+div.buttons-container button {
+  border-style: none;
+  color: #000000;
+  font-size: 22px;
+  outline: none;
+  margin: .5px;
+}
+
+div.buttons-container button.num-button {
+  background-color: #fafafa;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+div.buttons-container button.binary-ope-button,
+div.buttons-container button.unary-ope-button {
+  background-color: #f0f0f0
+}
+
+div.buttons-container button.num-button[data-is-active="true"],
+div.buttons-container button.unary-ope-button[data-is-active="true"] {
+  background-color: #e6e6e6;
+}
+
+div.buttons-container button.binary-ope-button[data-is-active="true"] {
+  background-color: #006eb1;
+  color: #d5eeee;
+}
+
+@media (min-width: 788px) {
+  div.buttons-container button.num-button:hover,
+  div.buttons-container button.unary-ope-button:hover {
+    background-color: #e6e6e6;
+  }
+  div.buttons-container button.binary-ope-button:hover {
+    background-color: #006eb1;
+    color: #d5eeee;
+  }
+}
+
+div.buttons-container button.num-button:focus {
+  border-style: none;
 }
