@@ -39,6 +39,28 @@ export class App extends React.Component {
     this.calc = this.calc.bind(this);
   }
 
+  componentDidMount() {
+    this.eventListener = document.addEventListener('keydown', (e) => {
+      if (/^[0-9]$|\./.test(e.key)) {
+        this.onNum(e.key);
+      } else if (/^\+|-|\*|\/$/.test(e.key)) {
+        this.onBinaryOpe(e.key);
+      } else if (e.key === 'Escape') {
+        this.onClearAll();
+      } else if (e.key === 'Delete') {
+        this.onCancel();
+      } else if (e.key === 'Backspace') {
+        this.onBackSpace();
+      } else if (e.key === 'Enter' || e.key === '=') {
+        this.onEqu();
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.eventListener);
+  }
+
   /**
    * 数字が入力された場合
    * @param {string} num - /[0-9]|\./
@@ -319,6 +341,7 @@ export class App extends React.Component {
       <Button
         key={button.name}
         name={button.name}
+        keyName={button.keyName}
         handler={this[button.handler]}
         arg={button.arg}
         content={button.content}

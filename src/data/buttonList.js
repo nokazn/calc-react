@@ -28,7 +28,7 @@ export default [
     arg: 'reciprocal'
   },
   {
-    name: 'allClear',
+    name: 'clearAll',
     content: 'AC',
     className: 'unary-ope-button',
     handler: 'onClearAll',
