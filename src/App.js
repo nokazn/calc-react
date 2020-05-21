@@ -168,7 +168,6 @@ export class App extends React.Component {
         };
       },
       square ({ formula, value }) {
-        console.log({ formula })
         return {
           formula: `sqr(${formula})`,
           value: String(Math.pow(value, 2))
@@ -201,7 +200,6 @@ export class App extends React.Component {
       value: parseFloat(inputNum),
     });
 
-    console.log({ answer })
     this.setState(() => ({
       provisionalNum: answer.value,
       provisionalTmpFormulaNum: answer.formula,
@@ -311,11 +309,12 @@ export class App extends React.Component {
       provisionalTmpFormulaNum,
       tmpFormulaHistory
     } = this.state;
+
     const provisionalTmpFormula = tmpFormulaHistory.nums.map((num, i) => {
       const ope = tmpFormulaHistory.opes[i];
       return `${num}${ope ?? ''}`;
     }).join('') + provisionalOpe + provisionalTmpFormulaNum;
-    console.log(provisionalTmpFormula);
+
     const CalcButton = buttonList.map((button) => (
       <Button
         key={button.name}
