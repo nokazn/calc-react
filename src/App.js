@@ -3,6 +3,8 @@ import Button from './components/Button';
 import buttonList from './data/buttonList';
 import { enqueue } from './utils/enqueue';
 import { dequeue } from './utils/dequeue';
+import { getFontSize } from './utils/getFontSize';
+import { optimizeFontSize } from './utils/optimizeFontSize';
 import { convertToZero } from './utils/convertToZero';
 import { addComma } from './utils/addComma';
 import { isCalculatable } from './utils/isCalculatable';
@@ -15,7 +17,6 @@ export class App extends React.Component {
     super(props);
     this.state = {
       innerWidth: 0,
-      defaultFontSize: {},
       activeButtonName: null,
       nums: ['', ''],
       opes: ['', ''],
@@ -25,7 +26,11 @@ export class App extends React.Component {
       tmpFormulaHistory: {
         nums: [],
         opes: [],
-      }
+      },
+      defaultFontSize: {
+        tmpFormulaHistoryBox: 0,
+        answerBox: 0,
+      },
     }
 
     this.onNum = this.onNum.bind(this);
@@ -40,6 +45,35 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
+    const tmpFormulaHistoryBox = document.getElementById('tmpFormulaHistoryBox');
+    const answerBox = document.getElementById('answerBox');
+    this.setState({
+      innerWidth: window.innerWidth,
+      defaultFontSize: {
+        tmpFormulaHistoryBox: getFontSize(tmpFormulaHistoryBox),
+        answerBox: getFontSize(answerBox),
+      },
+    });
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach(mutation => {
+        const element = mutation.target.parentElement;
+        optimizeFontSize({
+          diff: mutation.target.data.length - mutation.oldValue.length,
+          element,
+          innerWidth: this.state.innerWidth,
+          defaultFontSize: this.state.defaultFontSize[element.parentElement.id]
+        });
+      });
+    });
+    const options = {
+      characterData: true, // テキストノードの変化を監視
+      characterDataOldValue: true,  // テキストノードの古い値を保持
+      subtree: true  // 子孫ノードの変化を監視
+    };
+    observer.observe(tmpFormulaHistoryBox, options);
+    observer.observe(answerBox, options);
+
     this.eventListener = document.addEventListener('keydown', (e) => {
       if (/^[0-9]$|\./.test(e.key)) {
         this.onNum(e.key);
