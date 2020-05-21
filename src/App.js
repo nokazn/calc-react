@@ -1,12 +1,10 @@
 import React from 'react';
 import Button from './components/Button';
+import { TmpFormulaHistoryBox } from './components/TmpFormulaHistoryBox';
+import { AnswerBox } from './components/AnswerBox'
 import buttonList from './data/buttonList';
 import { enqueue } from './utils/enqueue';
 import { dequeue } from './utils/dequeue';
-import { getFontSize } from './utils/getFontSize';
-import { optimizeFontSize } from './utils/optimizeFontSize';
-import { convertToZero } from './utils/convertToZero';
-import { addComma } from './utils/addComma';
 import { isCalculatable } from './utils/isCalculatable';
 import { calc } from './utils/calc';
 import './App.css';
@@ -27,10 +25,6 @@ export class App extends React.Component {
         nums: [],
         opes: [],
       },
-      defaultFontSize: {
-        tmpFormulaHistoryBox: 0,
-        answerBox: 0,
-      },
     }
 
     this.onNum = this.onNum.bind(this);
@@ -45,34 +39,9 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    const tmpFormulaHistoryBox = document.getElementById('tmpFormulaHistoryBox');
-    const answerBox = document.getElementById('answerBox');
     this.setState({
       innerWidth: window.innerWidth,
-      defaultFontSize: {
-        tmpFormulaHistoryBox: getFontSize(tmpFormulaHistoryBox),
-        answerBox: getFontSize(answerBox),
-      },
     });
-
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach(mutation => {
-        const element = mutation.target.parentElement;
-        optimizeFontSize({
-          diff: mutation.target.data.length - mutation.oldValue.length,
-          element,
-          innerWidth: this.state.innerWidth,
-          defaultFontSize: this.state.defaultFontSize[element.parentElement.id]
-        });
-      });
-    });
-    const options = {
-      characterData: true, // テキストノードの変化を監視
-      characterDataOldValue: true,  // テキストノードの古い値を保持
-      subtree: true  // 子孫ノードの変化を監視
-    };
-    observer.observe(tmpFormulaHistoryBox, options);
-    observer.observe(answerBox, options);
 
     this.eventListener = document.addEventListener('keydown', (e) => {
       if (/^[0-9]$|\./.test(e.key)) {
@@ -371,40 +340,33 @@ export class App extends React.Component {
       return `${num}${ope ?? ''}`;
     }).join('') + provisionalOpe + provisionalTmpFormulaNum;
 
-    const CalcButton = buttonList.map((button) => (
-      <Button
-        key={button.name}
-        name={button.name}
-        keyName={button.keyName}
-        handler={this[button.handler]}
-        arg={button.arg}
-        content={button.content}
-        className={button.className}
-      />
-    ));
-
     return (
       <>
         <div className="box-container">
-          <div
-            id="tmpFormulaHistoryBox"
-            className="box tmp-formula-history-box">
-            <span>{provisionalTmpFormula}</span>
-          </div>
+          <TmpFormulaHistoryBox
+            innerWidth={this.state.innerWidth}
+            tmpFormulaHistory={this.state.tmpFormulaHistory}
+            provisionalOpe={this.state.provisionalOpe}
+            provisionalTmpFormulaNum={this.state.provisionalTmpFormulaNum} />
 
-          <div
-            id="answerBox"
-            className="box answer-box">
-            <span>
-              {addComma(convertToZero(
-                this.state.provisionalNum || this.state.nums[1]
-              ))}
-            </span>
-          </div>
+          <AnswerBox
+            innerWidth={this.state.innerWidth}
+            provisionalNum={this.state.provisionalNum}
+            nums={this.state.nums} />
         </div>
 
         <div className="buttons-container">
-          {CalcButton}
+          {buttonList.map((button) => (
+            <Button
+              key={button.name}
+              name={button.name}
+              keyName={button.keyName}
+              handler={this[button.handler]}
+              arg={button.arg}
+              content={button.content}
+              className={button.className}
+            />
+          ))}
         </div>
       </>
     );
