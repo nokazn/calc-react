@@ -1,3 +1,7 @@
+/**
+ * @param {any[]} list 
+ * @param {number} count 
+ */
 export const dequeue = (list, count = 1) => {
   if (typeof count !== 'number') {
     throw new SyntaxError('Invalid or unexpected token');

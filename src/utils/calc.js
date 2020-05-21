@@ -1,3 +1,8 @@
+/**
+ * @param {[string, string]} nums 
+ * @param {'+' | '-' | '*' | '/'} ope 
+ * @return {string}
+ */
 export const calc = (nums, ope) => {
   const numList = nums.map(parseFloat);
   switch(ope) {

@@ -1,5 +1,6 @@
 /**
  * @param {string} num 
+ * @return {string}
  */
 export const addComma = (num) => {
   const replacer = (num) => num

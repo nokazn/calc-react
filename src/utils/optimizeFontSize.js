@@ -1,7 +1,7 @@
 import { getFontSize } from './getFontSize';
 
 /**
- * @param { diff: number, element: Element, innerWidth: number, defaultFontSize: number} 
+ * @param { { diff: number, element: Element, innerWidth: number, defaultFontSize: number } } 
  * @return {void}
  */
 export const optimizeFontSize = ({
