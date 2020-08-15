@@ -62,7 +62,7 @@ export class App extends React.Component<{}, State> {
 
     const eventListener = (e: KeyboardEvent) => {
       if (/^[0-9]$|\./.test(e.key)) {
-        this.onNum(e.key);
+        this.onNum(e.key as Num);
       } else if (/^\+|-|\*|\/$/.test(e.key)) {
         this.onBinaryOpe(e.key as Ope);
       } else if (e.key === 'Escape') {
@@ -87,9 +87,8 @@ export class App extends React.Component<{}, State> {
 
   /**
    * 数字が入力された場合
-   * @param {string} num - /[0-9]|\./
    */
-  onNum(inputNum: string) {
+  onNum(inputNum: Num) {
     const {
       provisionalNum,
       provisionalOpe,
@@ -150,7 +149,6 @@ export class App extends React.Component<{}, State> {
 
   /**
    * 二項演算子が入力された場合
-   * @param {string} - '+' | '-' | '*' | '/'
    */
   onBinaryOpe(inputOpe: Ope) {
     const {
@@ -188,7 +186,6 @@ export class App extends React.Component<{}, State> {
 
   /**
    * 単項演算子が入力された場合
-   * @param {string} type - 'percent' | 'root' | 'square' | 'reciprocal' | 'negate'
    */
   onUnaryOpe(type: 'percent' | 'root' | 'square' | 'reciprocal' | 'negate') {
     const handlers: { [k: string]: Handler } = {
@@ -211,7 +208,6 @@ export class App extends React.Component<{}, State> {
           value: String(Math.pow(value, 2))
         };
       },
-      // @todo
       reciprocal ({ formula, value }) {
         return {
           formula: `1/(${formula})`,
