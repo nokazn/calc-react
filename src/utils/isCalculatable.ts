@@ -1,12 +1,8 @@
 import { OPE_LIST } from '../constant';
+import { Ope } from '../types';
 
-/**
- * @param {[number, number]} nums 
- * @param {string} ope 
- * @return {boolean}
- */
-export const isCalculatable = (nums, ope) => {
+export const isCalculatable = (nums: [string, string], ope: Ope): boolean => {
   return !Number.isNaN(parseFloat(nums[0]))
     && !Number.isNaN(parseFloat(nums[1]))
     && OPE_LIST.some((availableOpe) => ope === availableOpe);
-}
+};

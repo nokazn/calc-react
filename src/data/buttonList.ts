@@ -1,4 +1,13 @@
-export default [
+type ButtonItem = {
+  name: string
+  content: string
+  className: string
+  // @todo
+  handler: string
+  arg: string | undefined
+}
+
+export const buttonList: ButtonItem[] =  [
   {
     name: 'percent',
     content: '％',

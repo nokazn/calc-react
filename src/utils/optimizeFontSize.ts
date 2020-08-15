@@ -1,15 +1,16 @@
 import { getFontSize } from './getFontSize';
 
-/**
- * @param { { diff: number, element: Element, innerWidth: number, defaultFontSize: number } } 
- * @return {void}
- */
 export const optimizeFontSize = ({
   diff = 0,
   element,
   innerWidth,
   defaultFontSize,
-}) => {
+}: {
+  diff: number
+  element: HTMLElement
+  innerWidth: number
+  defaultFontSize: number
+}): void => {
   // childEle の親要素の padding が左右で 2% ずつなのを考慮
   let spanRatio = element.clientWidth / (innerWidth * (1 - 0.02 * 2));
   let fontSize = getFontSize(element);

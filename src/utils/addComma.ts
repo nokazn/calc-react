@@ -1,9 +1,5 @@
-/**
- * @param {string} num 
- * @return {string}
- */
-export const addComma = (num) => {
-  const replacer = (num) => num
+export const addComma = (num: string): string => {
+  const replacer = (num: string) => num
   .replace(/(^-?\d+)(\d{3})($|(?:\.|,\d))/, (match, ...p) => {
       // p[0] = (マイナス? 数字1回以上)
       // p[1] = (数字3回)
