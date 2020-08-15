@@ -2,10 +2,10 @@ type ButtonItem = {
   name: string
   content: string
   className: string
-  // @todo
-  handler: string
+  handler: 'onUnaryOpe' | 'onClearAll' | 'onCancel' | 'onBackSpace' | 'onBinaryOpe' | 'onNum' | 'onPeriod' | 'onEqu'
   arg: string | undefined
 }
+
 
 export const buttonList: ButtonItem[] =  [
   {

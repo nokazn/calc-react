@@ -7,13 +7,13 @@ type Props = {
   content: string
   // @todo
   handler: (args: any) => void
-  arg: string
+  arg: string | undefined
 }
 
 type State = {}
 
 class Button extends React.Component<Props, State> {
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.onMouseDown = this.onMouseDown.bind(this);
   }

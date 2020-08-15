@@ -25,10 +25,11 @@ type State = {
 }
 
 export class App extends React.Component<{}, State> {
-  private eventListener: (e: KeyboardEvent) => void;
+  private eventListener: ((e: KeyboardEvent) => void) | undefined;
 
-  constructor(props) {
+  constructor(props: {}) {
     super(props);
+    this.eventListener = undefined;
     this.state = {
       innerWidth: 0,
       activeButtonName: null,
@@ -79,7 +80,9 @@ export class App extends React.Component<{}, State> {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.eventListener);
+    if (this.eventListener != null) {
+      document.removeEventListener('keydown', this.eventListener);
+    }
   }
 
   /**
@@ -187,7 +190,7 @@ export class App extends React.Component<{}, State> {
    * 単項演算子が入力された場合
    * @param {string} type - 'percent' | 'root' | 'square' | 'reciprocal' | 'negate'
    */
-  onUnaryOpe(type) {
+  onUnaryOpe(type: 'percent' | 'root' | 'square' | 'reciprocal' | 'negate') {
     const handlers: { [k: string]: Handler } = {
       percent ({ value }) {
         const answer = String(value / 100);
