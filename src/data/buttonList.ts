@@ -1,4 +1,13 @@
-export default [
+type ButtonItem = {
+  name: string
+  content: string
+  className: string
+  handler: 'onUnaryOpe' | 'onClearAll' | 'onCancel' | 'onBackSpace' | 'onBinaryOpe' | 'onNum' | 'onPeriod' | 'onEqu'
+  arg: string | undefined
+}
+
+
+export const buttonList: ButtonItem[] =  [
   {
     name: 'percent',
     content: '％',
