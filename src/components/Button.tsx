@@ -1,7 +1,18 @@
 import React from 'react';
 import MathJax from 'react-mathjax2';
 
-class Button extends React.Component {
+type Props = {
+  name: string
+  className: string
+  content: string
+  // @todo
+  handler: (args: any) => void
+  arg: string
+}
+
+type State = {}
+
+class Button extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -11,7 +22,7 @@ class Button extends React.Component {
     const { arg, handler } = this.props;
     handler(arg)
   }
-  
+
   render() {
     return (
       <button

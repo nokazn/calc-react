@@ -1,13 +1,27 @@
 import React from 'react';
 import { getFontSize } from '../utils/getFontSize';
 import { optimizeFontSize } from '../utils/optimizeFontSize';
+import { addComma } from '../utils/addComma';
+import { convertToZero } from '../utils/convertToZero';
 
-export class TmpFormulaHistoryBox extends React.Component {
+export type Props = {
+  provisionalNum: string
+  nums: [string, string]
+  innerWidth: number
+}
+
+type State = {
+  defaultFontSize: number
+}
+
+export class AnswerBox extends React.Component<Props, State> {
+  private elementRef: React.RefObject<HTMLDivElement>
+
   constructor(props) {
     super(props);
     this.elementRef = React.createRef();
     this.state = {
-      defaultFontSize: 24,
+      defaultFontSize: props.innerWidth > 767 ? 72 : 56,
     };
   }
 
@@ -20,10 +34,11 @@ export class TmpFormulaHistoryBox extends React.Component {
       mutations.forEach((mutation) => {
         const element = mutation.target.parentElement;
         const diff = mutation.target.data.length - mutation.oldValue.length;
+        const { innerWidth } = this.props;
         optimizeFontSize({
-          diff,
           element,
-          innerWitdh: this.props.innerWidth,
+          diff,
+          innerWidth,
           defaultFontSize: getFontSize(this.elementRef.current),
         });
       });
@@ -38,21 +53,18 @@ export class TmpFormulaHistoryBox extends React.Component {
 
   render() {
     const {
-      tmpFormulaHistory,
-      provisionalOpe,
-      provisionalTmpFormulaNum,
+      provisionalNum,
+      nums,
     } = this.props;
-
-    const provisionalTmpFormula = tmpFormulaHistory.nums.map((num, i) => {
-      const ope = tmpFormulaHistory.opes[i];
-      return `${num}${ope ?? ''}`;
-    }).join('') + provisionalOpe + provisionalTmpFormulaNum;
-
     return (
       <div
         ref={this.elementRef}
-        className="box tmp-formula-history-box">
-        <span>{provisionalTmpFormula}</span>
+        className="box answer-box">
+        <span>
+          {addComma(convertToZero(
+            provisionalNum || nums[1]
+          ))}
+        </span>
       </div>
     )
   }
