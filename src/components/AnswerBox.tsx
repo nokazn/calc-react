@@ -17,7 +17,7 @@ type State = {
 export class AnswerBox extends React.Component<Props, State> {
   private elementRef: React.RefObject<HTMLDivElement>
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.elementRef = React.createRef();
     this.state = {
@@ -33,7 +33,9 @@ export class AnswerBox extends React.Component<Props, State> {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         const element = mutation.target.parentElement;
-        const diff = mutation.target.data.length - mutation.oldValue.length;
+        if (element == null) return;
+
+        const diff = (mutation.target.nodeValue?.length ?? 0) - (mutation.oldValue?.length ?? 0);
         const { innerWidth } = this.props;
         optimizeFontSize({
           element,
@@ -48,7 +50,9 @@ export class AnswerBox extends React.Component<Props, State> {
       characterDataOldValue: true,  // テキストノードの古い値を保持
       subtree: true  // 子孫ノードの変化を監視
     };
-    observer.observe(this.elementRef.current, options);
+    if (this.elementRef.current != null) {
+      observer.observe(this.elementRef.current, options);
+    }
   }
 
   render() {

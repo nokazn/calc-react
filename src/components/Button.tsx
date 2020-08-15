@@ -1,4 +1,5 @@
 import React from 'react';
+// @ts-ignore @todo
 import MathJax from 'react-mathjax2';
 
 type Props = {
