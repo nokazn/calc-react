@@ -1,8 +1,22 @@
+import { FC } from 'react';
+
+import { NumberButton } from '../components/NumberButton'
+import { BinaryOpeButton } from '../components/BinaryOpeButton'
+import { UnaryOpeButton } from '../components/UnaryOpeButton'
+import { ClearAllButton } from '../components/ClearAllButton'
+import { CancelButton } from '../components/CancelButton'
+import { BackSpaceButton } from '../components/BackSpaceButton'
+import { EqualButton } from '../components/EqualButton'
+
+type Props = {
+  name: string
+  mathContent: string
+}
+
 type ButtonItem = {
   name: string
   mathContent: string
-  className: string
-  handler: 'onUnaryOpe' | 'onClearAll' | 'onCancel' | 'onBackSpace' | 'onBinaryOpe' | 'onNum' | 'onPeriod' | 'onEqu'
+  component: FC<Props>
 }
 
 
@@ -10,145 +24,121 @@ export const buttonList: ButtonItem[] =  [
   {
     name: 'percent',
     mathContent: '％',
-    className: 'unary-ope-button',
-    handler: 'onUnaryOpe',
+    component: UnaryOpeButton,
   },
   {
     name: 'root',
     mathContent: 'sqrt{x}',
-    className: 'unary-ope-button',
-    handler: 'onUnaryOpe',
+    component: UnaryOpeButton,
   },
   {
     name: 'square',
     mathContent: 'x^{2}',
-    className: 'unary-ope-button',
-    handler: 'onUnaryOpe',
+    component: UnaryOpeButton,
   },
   {
     name: 'reciprocal',
     mathContent: 'frac{1}{x}',
-    className: 'unary-ope-button',
-    handler: 'onUnaryOpe',
+    component: UnaryOpeButton,
   },
   {
     name: 'clearAll',
     mathContent: 'AC',
-    className: 'unary-ope-button',
-    handler: 'onClearAll',
+    component: ClearAllButton,
   },
   {
     name: 'cancel',
     mathContent: 'C',
-    className: 'unary-ope-button',
-    handler: 'onCancel',
+    component: CancelButton,
   },
   {
     name: 'clear',
     mathContent: '←',
-    className: 'unary-ope-button',
-    handler: 'onBackSpace',
+    component: BackSpaceButton,
   },
   {
     name: '/',
     mathContent: 'div',
-    className: 'binary-ope-button',
-    handler: 'onBinaryOpe',
+    component: BinaryOpeButton,
   },
   {
     name: '7',
     mathContent: '7',
-    className: 'num-button',
-    handler: 'onNum',
+    component: NumberButton,
   },
   {
     name: '8',
     mathContent: '8',
-    className: 'num-button',
-    handler: 'onNum',
+    component: NumberButton,
   },
   {
     name: '9',
     mathContent: '9',
-    className: 'num-button',
-    handler: 'onNum',
+    component: NumberButton,
   },
   {
     name: '*',
     mathContent: 'times',
-    className: 'binary-ope-button',
-    handler: 'onBinaryOpe',
+    component: BinaryOpeButton,
   },
   {
     name: '4',
     mathContent: '4',
-    className: 'num-button',
-    handler: 'onNum',
+    component: NumberButton,
   },
   {
     name: '5',
     mathContent: '5',
-    className: 'num-button',
-    handler: 'onNum',
+    component: NumberButton,
   },
   {
     name: '6',
     mathContent: '6',
-    className: 'num-button',
-    handler: 'onNum',
+    component: NumberButton,
   },
   {
     name: '-',
     mathContent: '-',
-    className: 'binary-ope-button',
-    handler: 'onBinaryOpe',
+    component: BinaryOpeButton,
   },
   {
     name: '1',
     mathContent: '1',
-    className: 'num-button',
-    handler: 'onNum',
+    component: NumberButton,
   },
   {
     name: '2',
     mathContent: '2',
-    className: 'num-button',
-    handler: 'onNum',
+    component: NumberButton,
   },
   {
     name: '3',
     mathContent: '3',
-    className: 'num-button',
-    handler: 'onNum',
+    component: NumberButton,
   },
   {
     name: '+',
     mathContent: '+',
-    className: 'binary-ope-button',
-    handler: 'onBinaryOpe',
+    component: BinaryOpeButton,
   },
   {
     name: 'negate',
     mathContent: 'pm',
-    className: 'unary-ope-button',
-    handler: 'onUnaryOpe',
+    component: UnaryOpeButton,
   },
   {
     name: '0',
     mathContent: '0',
-    className: 'num-button',
-    handler: 'onNum',
+    component: NumberButton,
   },
   {
     name: '.',
     mathContent: '.',
-    className: 'unary-ope-button',
-    handler: 'onPeriod',
+    component: NumberButton,
   },
   {
     name: '=',
     mathContent: '=',
-    className: 'binary-ope-button',
-    handler: 'onEqu',
+    component: EqualButton,
   },
 ];
