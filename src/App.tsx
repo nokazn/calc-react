@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from './components/Button';
+import { Button } from './components/Button';
 import { TmpFormulaHistoryBox } from './components/TmpFormulaHistoryBox';
 import { AnswerBox } from './components/AnswerBox'
 import { buttonList } from './data/buttonList';
