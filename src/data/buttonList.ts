@@ -1,179 +1,154 @@
 type ButtonItem = {
   name: string
-  content: string
+  mathContent: string
   className: string
   handler: 'onUnaryOpe' | 'onClearAll' | 'onCancel' | 'onBackSpace' | 'onBinaryOpe' | 'onNum' | 'onPeriod' | 'onEqu'
-  arg: string | undefined
 }
 
 
 export const buttonList: ButtonItem[] =  [
   {
     name: 'percent',
-    content: '％',
+    mathContent: '％',
     className: 'unary-ope-button',
     handler: 'onUnaryOpe',
-    arg: 'percent'
   },
   {
     name: 'root',
-    content: 'sqrt{x}',
+    mathContent: 'sqrt{x}',
     className: 'unary-ope-button',
     handler: 'onUnaryOpe',
-    arg: 'root'
   },
   {
     name: 'square',
-    content: 'x^{2}',
+    mathContent: 'x^{2}',
     className: 'unary-ope-button',
     handler: 'onUnaryOpe',
-    arg: 'square'
   },
   {
     name: 'reciprocal',
-    content: 'frac{1}{x}',
+    mathContent: 'frac{1}{x}',
     className: 'unary-ope-button',
     handler: 'onUnaryOpe',
-    arg: 'reciprocal'
   },
   {
     name: 'clearAll',
-    content: 'AC',
+    mathContent: 'AC',
     className: 'unary-ope-button',
     handler: 'onClearAll',
-    arg: undefined
   },
   {
     name: 'cancel',
-    content: 'C',
+    mathContent: 'C',
     className: 'unary-ope-button',
     handler: 'onCancel',
-    arg: undefined
   },
   {
     name: 'clear',
-    content: '←',
+    mathContent: '←',
     className: 'unary-ope-button',
     handler: 'onBackSpace',
-    arg: undefined
   },
   {
-    name: 'divide',
-    content: 'div',
+    name: '/',
+    mathContent: 'div',
     className: 'binary-ope-button',
     handler: 'onBinaryOpe',
-    arg: '/'
   },
   {
     name: '7',
-    content: '7',
+    mathContent: '7',
     className: 'num-button',
     handler: 'onNum',
-    arg: '7'
   },
   {
     name: '8',
-    content: '8',
+    mathContent: '8',
     className: 'num-button',
     handler: 'onNum',
-    arg: '8'
   },
   {
     name: '9',
-    content: '9',
+    mathContent: '9',
     className: 'num-button',
     handler: 'onNum',
-    arg: '9'
   },
   {
-    name: 'multiple',
-    content: 'times',
+    name: '*',
+    mathContent: 'times',
     className: 'binary-ope-button',
     handler: 'onBinaryOpe',
-    arg: '*'
   },
   {
     name: '4',
-    content: '4',
+    mathContent: '4',
     className: 'num-button',
     handler: 'onNum',
-    arg: '4'
   },
   {
     name: '5',
-    content: '5',
+    mathContent: '5',
     className: 'num-button',
     handler: 'onNum',
-    arg: '5'
   },
   {
     name: '6',
-    content: '6',
+    mathContent: '6',
     className: 'num-button',
     handler: 'onNum',
-    arg: '6'
   },
   {
-    name: 'subtract',
-    content: '-',
+    name: '-',
+    mathContent: '-',
     className: 'binary-ope-button',
     handler: 'onBinaryOpe',
-    arg: '-'
   },
   {
     name: '1',
-    content: '1',
+    mathContent: '1',
     className: 'num-button',
     handler: 'onNum',
-    arg: '1'
   },
   {
     name: '2',
-    content: '2',
+    mathContent: '2',
     className: 'num-button',
     handler: 'onNum',
-    arg: '2'
   },
   {
     name: '3',
-    content: '3',
+    mathContent: '3',
     className: 'num-button',
     handler: 'onNum',
-    arg: '3'
   },
   {
-    name: 'add',
-    content: '+',
+    name: '+',
+    mathContent: '+',
     className: 'binary-ope-button',
     handler: 'onBinaryOpe',
-    arg: '+'
   },
   {
     name: 'negate',
-    content: 'pm',
+    mathContent: 'pm',
     className: 'unary-ope-button',
     handler: 'onUnaryOpe',
-    arg: 'negate'
   },
   {
     name: '0',
-    content: '0',
+    mathContent: '0',
     className: 'num-button',
     handler: 'onNum',
-    arg: '0'
   },
   {
     name: '.',
-    content: '.',
+    mathContent: '.',
     className: 'unary-ope-button',
     handler: 'onPeriod',
-    arg: '.'
   },
   {
     name: '=',
-    content: '=',
+    mathContent: '=',
     className: 'binary-ope-button',
     handler: 'onEqu',
-    arg: ''
   },
 ];
