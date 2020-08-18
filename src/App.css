@@ -10,7 +10,6 @@ div.container {
   min-height: 400px;
 }
 
-
 div.box-container {
   display: grid;
   grid-template-rows: 1fr 2fr;
@@ -23,7 +22,7 @@ div.box-container {
 div.box-container div.box {
   display: flex;
   justify-content: flex-end;
-  align-items:  center;
+  align-items: center;
   width: 100%;
   box-sizing: border-box;
   padding: 0 2%;
@@ -49,7 +48,6 @@ div.box-container div.answer-box {
   }
 }
 
-
 div.buttons-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -63,7 +61,7 @@ div.buttons-container button {
   font-size: 20px;
   font-weight: bold;
   outline: none;
-  margin: .7px;
+  margin: 0.7px;
 }
 
 div.buttons-container button.num-button {
@@ -74,15 +72,15 @@ div.buttons-container button.num-button {
 
 div.buttons-container button.binary-ope-button,
 div.buttons-container button.unary-ope-button {
-  background-color: #f0f0f0
+  background-color: #f0f0f0;
 }
 
-div.buttons-container button.num-button[data-is-active="true"],
-div.buttons-container button.unary-ope-button[data-is-active="true"] {
+div.buttons-container button.num-button[data-is-active='true'],
+div.buttons-container button.unary-ope-button[data-is-active='true'] {
   background-color: #e6e6e6;
 }
 
-div.buttons-container button.binary-ope-button[data-is-active="true"] {
+div.buttons-container button.binary-ope-button[data-is-active='true'] {
   background-color: #006eb1;
   color: #d5eeee;
 }

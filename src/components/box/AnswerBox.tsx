@@ -1,13 +1,17 @@
 import React, { FC, useRef, useState, useEffect } from 'react';
-import { getFontSize, optimizeFontSize, addComma, convertToZero } from '../utils';
+import styled from 'styled-components';
+
+import { Box } from './Box.style';
+import { getFontSize, optimizeFontSize, addComma, convertToZero } from '../../utils';
 
 export type Props = {
   provisionalNum: string;
   nums: [string, string];
   innerWidth: number;
+  className?: string;
 };
 
-export const AnswerBox: FC<Props> = (props) => {
+const View: FC<Props> = (props) => {
   const [, setDefaultFontSize] = useState(props.innerWidth > 767 ? 72 : 56);
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -44,8 +48,20 @@ export const AnswerBox: FC<Props> = (props) => {
   }, [props]);
 
   return (
-    <div ref={elementRef} className='box answer-box'>
+    <Box ref={elementRef} className={props.className}>
       <span>{addComma(convertToZero(props.provisionalNum || props.nums[1]))}</span>
-    </div>
+    </Box>
   );
 };
+
+export const AnswerBox = styled(View)`
+  font-weight: bold;
+
+  @media (max-width: 767px) {
+    font-size: 56px;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 72px;
+  }
+`;

@@ -1,13 +1,14 @@
 import React, { useContext, FC, useEffect } from 'react';
 
-import { AppContext } from '../App';
-import { Button } from './Button';
-import { enqueue, isCalculatable } from '../utils';
-import type { BinaryOpe } from '../types';
+import { AppContext } from '../../../App';
+import { StyledBiaryOpeButton } from './BinaryOpeButton.style';
+import { enqueue, isCalculatable } from '../../../utils';
+import type { BinaryOpe } from '../../../types';
 
 type Props = {
   name: string;
   mathContent: string;
+  className?: string;
 };
 
 export const BinaryOpeButton: FC<Props> = (props) => {
@@ -62,11 +63,11 @@ export const BinaryOpeButton: FC<Props> = (props) => {
   });
 
   return (
-    <Button
+    <StyledBiaryOpeButton
       name={props.name}
       mathContent={props.mathContent}
       handler={onBinaryOpe}
-      className={'binary-ope-button'}
+      className={props.className}
     />
   );
 };

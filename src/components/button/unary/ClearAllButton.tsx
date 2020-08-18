@@ -1,12 +1,13 @@
 import React, { useContext, FC, useEffect } from 'react';
 
-import { AppContext } from '../App';
-import { Button } from './Button';
-import { dequeue } from '../utils';
+import { AppContext } from '../../../App';
+import { StyledUnaryOpeButton } from './UnaryOpeButton.style';
+import { dequeue } from '../../../utils';
 
 type Props = {
   name: string;
   mathContent: string;
+  className?: string;
 };
 
 export const ClearAllButton: FC<Props> = (props) => {
@@ -50,11 +51,11 @@ export const ClearAllButton: FC<Props> = (props) => {
   });
 
   return (
-    <Button
+    <StyledUnaryOpeButton
       name={props.name}
       mathContent={props.mathContent}
       handler={onClearAll}
-      className={'unary-ope-button'}
+      className={props.className}
     />
   );
 };

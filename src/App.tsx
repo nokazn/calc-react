@@ -1,12 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import type { FC, Dispatch, SetStateAction } from 'react';
 
-import { TmpFormulaHistoryBox } from './components/TmpFormulaHistoryBox';
-import { AnswerBox } from './components/AnswerBox';
+import { Wrapper } from './components/wrapper/Wrapper.style';
+import { ButtonWrapper } from './components/wrapper/ButtonWrapper.style';
+import { BoxWrapper } from './components/wrapper/BoxWrapper.style';
+import { TmpFormulaHistoryBox } from './components/box/TmpFormulaHistoryBox';
+import { AnswerBox } from './components//box/AnswerBox';
 import { buttonList } from './data/buttonList';
 import { enqueue, dequeue, isCalculatable, calc } from './utils';
 import './App.css';
 import type { BinaryOpe, TwoTupple } from './types';
+
+type Props = {
+  className?: string;
+};
 
 type AppContextMethod = {
   innerWidth: number;
@@ -57,7 +64,7 @@ const initialAppContext: AppContextMethod = {
 
 export const AppContext: React.Context<AppContextMethod> = React.createContext(initialAppContext);
 
-export const App: FC = () => {
+export const App: FC<Props> = ({ className }) => {
   const [innerWidth, setInnerWidth] = useState(0);
   const [nums, setNums] = useState<TwoTupple<string>>(['', '']);
   const [opes, setOpes] = useState<TwoTupple<BinaryOpe | ''>>(['', '']);
@@ -112,26 +119,28 @@ export const App: FC = () => {
           calculate,
         }}
       >
-        <div className='box-container'>
-          <TmpFormulaHistoryBox
-            innerWidth={innerWidth}
-            tmpFormulaHistory={tmpFormulaHistory}
-            provisionalOpe={provisionalOpe}
-            provisionalTmpFormulaNum={provisionalTmpFormulaNum}
-          />
-
-          <AnswerBox innerWidth={innerWidth} provisionalNum={provisionalNum} nums={nums} />
-        </div>
-
-        <div className='buttons-container'>
-          {buttonList.map((button) => (
-            <button.component
-              key={button.name}
-              name={button.name}
-              mathContent={button.mathContent}
+        <Wrapper className={className}>
+          <BoxWrapper>
+            <TmpFormulaHistoryBox
+              innerWidth={innerWidth}
+              tmpFormulaHistory={tmpFormulaHistory}
+              provisionalOpe={provisionalOpe}
+              provisionalTmpFormulaNum={provisionalTmpFormulaNum}
             />
-          ))}
-        </div>
+
+            <AnswerBox innerWidth={innerWidth} provisionalNum={provisionalNum} nums={nums} />
+          </BoxWrapper>
+
+          <ButtonWrapper>
+            {buttonList.map((button) => (
+              <button.component
+                key={button.name}
+                name={button.name}
+                mathContent={button.mathContent}
+              />
+            ))}
+          </ButtonWrapper>
+        </Wrapper>
       </AppContext.Provider>
     </>
   );

@@ -1,7 +1,10 @@
 import React, { FC, useRef, useState, useEffect, useMemo } from 'react';
-import { getFontSize, optimizeFontSize } from '../utils';
+import styled from 'styled-components';
 
-export type Props = {
+import { Box } from './Box.style';
+import { getFontSize, optimizeFontSize } from '../../utils';
+
+type Props = {
   innerWidth: number;
   tmpFormulaHistory: {
     nums: string[];
@@ -9,12 +12,12 @@ export type Props = {
   };
   provisionalOpe: string;
   provisionalTmpFormulaNum: string;
+  className?: string;
 };
 
 const DEFAULT_FONT_SIZE = 24;
 
-// export class TmpFormulaHistoryBox extends React.Component<Props, State> {
-export const TmpFormulaHistoryBox: FC<Props> = (props) => {
+const View: FC<Props> = (props) => {
   const [, setDefaultFontSize] = useState(DEFAULT_FONT_SIZE);
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -65,8 +68,13 @@ export const TmpFormulaHistoryBox: FC<Props> = (props) => {
   }, [tmpFormulaHistory, provisionalOpe, provisionalTmpFormulaNum]);
 
   return (
-    <div ref={elementRef} className='box tmp-formula-history-box'>
+    <Box ref={elementRef} className={props.className}>
       <span>{provisionalTmpFormula}</span>
-    </div>
+    </Box>
   );
 };
+
+export const TmpFormulaHistoryBox = styled(View)`
+  font-size: 20px;
+  color: #a9a9a9;
+`;

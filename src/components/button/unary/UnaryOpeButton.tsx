@@ -1,12 +1,13 @@
 import React, { useContext, FC } from 'react';
 
-import { AppContext } from '../App';
-import { Button } from './Button';
-import type { UnaryOpe, Handler } from '../types';
+import { AppContext } from '../../../App';
+import { StyledUnaryOpeButton } from './UnaryOpeButton.style';
+import type { UnaryOpe, Handler } from '../../../types';
 
 type Props = {
   name: string;
   mathContent: string;
+  className?: string;
 };
 
 export const UnaryOpeButton: FC<Props> = (props) => {
@@ -65,11 +66,11 @@ export const UnaryOpeButton: FC<Props> = (props) => {
   };
 
   return (
-    <Button
+    <StyledUnaryOpeButton
       name={props.name}
       mathContent={props.mathContent}
       handler={onUnaryOpe}
-      className={'unary-ope-button'}
+      className={props.className}
     />
   );
 };
