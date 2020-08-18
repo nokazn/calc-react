@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, useRef, useState, useEffect, useMemo } from 'react';
 import { getFontSize } from '../utils/getFontSize';
 import { optimizeFontSize } from '../utils/optimizeFontSize';
 
@@ -12,25 +12,17 @@ export type Props = {
   provisionalTmpFormulaNum: string
 }
 
-type State = {
-  defaultFontSize: number
-}
+const DEFAULT_FONT_SIZE = 24;
 
-export class TmpFormulaHistoryBox extends React.Component<Props, State> {
-  private elementRef: React.RefObject<HTMLDivElement>;
+// export class TmpFormulaHistoryBox extends React.Component<Props, State> {
+export const TmpFormulaHistoryBox: FC<Props> = (props) => {
+  const [, setDefaultFontSize] = useState(DEFAULT_FONT_SIZE);
+  const elementRef = useRef<HTMLDivElement>(null)
 
-  constructor(props: Props) {
-    super(props);
-    this.elementRef = React.createRef();
-    this.state = {
-      defaultFontSize: 24,
-    };
-  }
+  useEffect(() => {
+    if (elementRef.current == null) return;
 
-  componentDidMount() {
-    this.setState({
-      defaultFontSize: getFontSize(this.elementRef.current),
-    });
+    setDefaultFontSize(getFontSize(elementRef.current));
 
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -41,39 +33,41 @@ export class TmpFormulaHistoryBox extends React.Component<Props, State> {
         optimizeFontSize({
           diff,
           element,
-          innerWidth: this.props.innerWidth,
-          defaultFontSize: getFontSize(this.elementRef.current),
+          innerWidth: props.innerWidth,
+          defaultFontSize: getFontSize(elementRef.current),
         });
       });
     });
-    const options = {
+    const options: MutationObserverInit = {
       characterData: true, // テキストノードの変化を監視
       characterDataOldValue: true,  // テキストノードの古い値を保持
-      subtree: true  // 子孫ノードの変化を監視
+      subtree: true,  // 子孫ノードの変化を監視
     };
-    if (this.elementRef.current != null) {
-      observer.observe(this.elementRef.current, options);
-    }
-  }
+    observer.observe(elementRef.current, options);
 
-  render() {
-    const {
-      tmpFormulaHistory,
-      provisionalOpe,
-      provisionalTmpFormulaNum,
-    } = this.props;
+    return () => {
+      observer.disconnect();
+    };
+  }, [props]);
 
-    const provisionalTmpFormula = tmpFormulaHistory.nums.map((num, i) => {
+  const {
+    tmpFormulaHistory,
+    provisionalOpe,
+    provisionalTmpFormulaNum,
+  } = props;
+
+  const provisionalTmpFormula = useMemo(() => {
+    return tmpFormulaHistory.nums.map((num, i) => {
       const ope = tmpFormulaHistory.opes[i];
       return `${num}${ope ?? ''}`;
     }).join('') + provisionalOpe + provisionalTmpFormulaNum;
+  }, [tmpFormulaHistory, provisionalOpe, provisionalTmpFormulaNum])
 
-    return (
-      <div
-        ref={this.elementRef}
-        className="box tmp-formula-history-box">
-        <span>{provisionalTmpFormula}</span>
-      </div>
-    )
-  }
-}
+  return (
+    <div
+      ref={elementRef}
+      className="box tmp-formula-history-box">
+      <span>{provisionalTmpFormula}</span>
+    </div>
+  );
+};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, useRef, useState, useEffect } from 'react';
 import { getFontSize } from '../utils/getFontSize';
 import { optimizeFontSize } from '../utils/optimizeFontSize';
 import { addComma } from '../utils/addComma';
@@ -10,25 +10,16 @@ export type Props = {
   innerWidth: number
 }
 
-type State = {
-  defaultFontSize: number
-}
+export const AnswerBox: FC<Props> = (props) => {
+  const [, setDefaultFontSize] = useState(props.innerWidth > 767
+    ? 72
+    : 56);
+  const elementRef = useRef<HTMLDivElement>(null)
 
-export class AnswerBox extends React.Component<Props, State> {
-  private elementRef: React.RefObject<HTMLDivElement>
+  useEffect(() => {
+    if (elementRef.current == null) return;
 
-  constructor(props: Props) {
-    super(props);
-    this.elementRef = React.createRef();
-    this.state = {
-      defaultFontSize: props.innerWidth > 767 ? 72 : 56,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      defaultFontSize: getFontSize(this.elementRef.current),
-    });
+    setDefaultFontSize(getFontSize(elementRef.current));
 
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -36,12 +27,12 @@ export class AnswerBox extends React.Component<Props, State> {
         if (element == null) return;
 
         const diff = (mutation.target.nodeValue?.length ?? 0) - (mutation.oldValue?.length ?? 0);
-        const { innerWidth } = this.props;
+        const { innerWidth } = props;
         optimizeFontSize({
           element,
           diff,
           innerWidth,
-          defaultFontSize: getFontSize(this.elementRef.current),
+          defaultFontSize: getFontSize(elementRef.current)
         });
       });
     });
@@ -50,26 +41,22 @@ export class AnswerBox extends React.Component<Props, State> {
       characterDataOldValue: true,  // テキストノードの古い値を保持
       subtree: true  // 子孫ノードの変化を監視
     };
-    if (this.elementRef.current != null) {
-      observer.observe(this.elementRef.current, options);
-    }
-  }
+    observer.observe(elementRef.current, options);
 
-  render() {
-    const {
-      provisionalNum,
-      nums,
-    } = this.props;
-    return (
-      <div
-        ref={this.elementRef}
-        className="box answer-box">
-        <span>
-          {addComma(convertToZero(
-            provisionalNum || nums[1]
-          ))}
-        </span>
-      </div>
-    )
-  }
-}
+    return () => {
+      observer.disconnect();
+    }
+  }, [props]);
+
+  return (
+    <div
+      ref={elementRef}
+      className="box answer-box">
+      <span>
+        {addComma(convertToZero(
+          props.provisionalNum || props.nums[1]
+        ))}
+      </span>
+    </div>
+  );
+};
