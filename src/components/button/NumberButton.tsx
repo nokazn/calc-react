@@ -1,13 +1,15 @@
 import React, { FC, useContext, useEffect } from 'react';
+import styled from 'styled-components';
 
-import { AppContext } from '../App';
+import { AppContext } from '../../App';
 import { Button } from './Button';
-import { Num } from '../types';
-import { enqueue } from '../utils';
+import { Num } from '../../types';
+import { enqueue } from '../../utils';
 
 type Props = {
   name: string;
   mathContent: string;
+  className?: string;
 };
 
 const updateProvisionalNum = (prev: string, input: Num): string => {
@@ -17,7 +19,7 @@ const updateProvisionalNum = (prev: string, input: Num): string => {
   return prev === '0' ? input : `${prev}${input}`;
 };
 
-export const NumberButton: FC<Props> = (props) => {
+const View: FC<Props> = (props) => {
   const {
     provisionalNum,
     opes,
@@ -67,7 +69,24 @@ export const NumberButton: FC<Props> = (props) => {
       name={props.name}
       mathContent={props.mathContent}
       handler={onNum}
-      className={props.name === '.' ? 'unary-ope-button' : 'num-button'}
+      className={props.className}
+      // @ts-ignore @todo
+      // className={props.name === '.' ? 'unary-ope-button' : 'num-button'}
     />
   );
 };
+
+export const NumberButton = styled(View)`
+  background-color: #fafafa;
+  font-size: 28px;
+  font-weight: bold;
+
+  &[data-is-active='true'],
+  &:hover {
+    background-color: #e6e6e6;
+  }
+
+  &:focus {
+    border-style: none;
+  }
+`;
