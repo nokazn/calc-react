@@ -2,9 +2,8 @@ import React, { useContext, FC, useEffect } from 'react';
 
 import { AppContext } from '../App';
 import { Button } from './Button';
-import { enqueue } from '../utils/enqueue';
+import { enqueue, isCalculatable } from '../utils';
 import type { BinaryOpe } from '../types';
-import { isCalculatable } from '../utils/isCalculatable';
 
 type Props = {
   name: string

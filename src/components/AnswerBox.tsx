@@ -1,8 +1,10 @@
 import React, { FC, useRef, useState, useEffect } from 'react';
-import { getFontSize } from '../utils/getFontSize';
-import { optimizeFontSize } from '../utils/optimizeFontSize';
-import { addComma } from '../utils/addComma';
-import { convertToZero } from '../utils/convertToZero';
+import {
+  getFontSize,
+  optimizeFontSize,
+  addComma,
+  convertToZero,
+ } from '../utils';
 
 export type Props = {
   provisionalNum: string

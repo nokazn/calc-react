@@ -2,7 +2,7 @@ import React, { useContext, FC, useEffect } from 'react';
 
 import { AppContext } from '../App';
 import { Button } from './Button';
-import { enqueue } from '../utils/enqueue';
+import { enqueue } from '../utils';
 
 type Props = {
   name: string

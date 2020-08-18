@@ -3,7 +3,7 @@ import React, { FC, useContext, useEffect } from 'react';
 import { AppContext } from '../App';
 import { Button } from './Button';
 import { Num } from '../types';
-import { enqueue } from '../utils/enqueue';
+import { enqueue } from '../utils';
 
 type Props = {
   name: string

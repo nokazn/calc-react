@@ -4,10 +4,12 @@ import type { FC, Dispatch, SetStateAction } from 'react';
 import { TmpFormulaHistoryBox } from './components/TmpFormulaHistoryBox';
 import { AnswerBox } from './components/AnswerBox'
 import { buttonList } from './data/buttonList';
-import { enqueue } from './utils/enqueue';
-import { dequeue } from './utils/dequeue';
-import { isCalculatable } from './utils/isCalculatable';
-import { calc } from './utils/calc';
+import {
+  enqueue,
+  dequeue,
+  isCalculatable,
+  calc,
+} from './utils';
 import './App.css';
 import type { BinaryOpe, TwoTupple } from './types';
 

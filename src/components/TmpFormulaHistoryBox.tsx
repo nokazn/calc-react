@@ -1,6 +1,5 @@
 import React, { FC, useRef, useState, useEffect, useMemo } from 'react';
-import { getFontSize } from '../utils/getFontSize';
-import { optimizeFontSize } from '../utils/optimizeFontSize';
+import { getFontSize, optimizeFontSize } from '../utils';
 
 export type Props = {
   innerWidth: number
