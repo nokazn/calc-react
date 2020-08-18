@@ -1,13 +1,14 @@
 import React, { useContext, FC } from 'react';
 
-import { AppContext } from '../App';
-import { Button } from './Button';
-import type { UnaryOpe, Handler } from '../types';
+import { AppContext } from '../../../App';
+import { StyledUnaryOpeButton } from './UnaryOpeButton.style';
+import type { UnaryOpe, Handler } from '../../../types';
 
 type Props = {
-  name: string
-  mathContent: string
-}
+  name: string;
+  mathContent: string;
+  className?: string;
+};
 
 export const UnaryOpeButton: FC<Props> = (props) => {
   const {
@@ -20,37 +21,37 @@ export const UnaryOpeButton: FC<Props> = (props) => {
 
   const onUnaryOpe = (type: UnaryOpe): void => {
     const handlers: { [k: string]: Handler } = {
-      percent ({ value }) {
+      percent({ value }) {
         const answer = String(value / 100);
         return {
           formula: answer,
-          value: answer
+          value: answer,
         };
       },
-      root ({ formula, value }) {
+      root({ formula, value }) {
         return {
           formula: `√(${formula})`,
-          value: String(Math.sqrt(value))
+          value: String(Math.sqrt(value)),
         };
       },
-      square ({ formula, value }) {
+      square({ formula, value }) {
         return {
           formula: `sqr(${formula})`,
-          value: String(Math.pow(value, 2))
+          value: String(Math.pow(value, 2)),
         };
       },
-      reciprocal ({ formula, value }) {
+      reciprocal({ formula, value }) {
         return {
           formula: `1/(${formula})`,
-          value: value !== 0 ? String(1 / value) : 'NaN'
+          value: value !== 0 ? String(1 / value) : 'NaN',
         };
       },
-      negate ({ formula, value }) {
+      negate({ formula, value }) {
         return {
           formula: `negate(${formula})`,
-          value: String(value * -1)
+          value: String(value * -1),
         };
-      }
+      },
     };
     // 入力中の値か、なければ前回の答えを計算して入力値を更新
     const inputNum = provisionalNum || nums[1] || '0';
@@ -65,11 +66,11 @@ export const UnaryOpeButton: FC<Props> = (props) => {
   };
 
   return (
-    <Button
+    <StyledUnaryOpeButton
       name={props.name}
       mathContent={props.mathContent}
       handler={onUnaryOpe}
-      className={'unary-ope-button'}
+      className={props.className}
     />
   );
 };

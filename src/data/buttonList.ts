@@ -1,26 +1,25 @@
 import { FC } from 'react';
 
-import { NumberButton } from '../components/NumberButton'
-import { BinaryOpeButton } from '../components/BinaryOpeButton'
-import { UnaryOpeButton } from '../components/UnaryOpeButton'
-import { ClearAllButton } from '../components/ClearAllButton'
-import { CancelButton } from '../components/CancelButton'
-import { BackSpaceButton } from '../components/BackSpaceButton'
-import { EqualButton } from '../components/EqualButton'
+import { NumberButton } from '../components/button/NumberButton';
+import { BinaryOpeButton } from '../components/button/binary/BinaryOpeButton';
+import { UnaryOpeButton } from '../components/button/unary/UnaryOpeButton';
+import { ClearAllButton } from '../components/button/unary/ClearAllButton';
+import { CancelButton } from '../components/button/unary/CancelButton';
+import { BackSpaceButton } from '../components/button/unary/BackSpaceButton';
+import { EqualButton } from '../components/button/binary/EqualButton';
 
 type Props = {
-  name: string
-  mathContent: string
-}
+  name: string;
+  mathContent: string;
+};
 
 type ButtonItem = {
-  name: string
-  mathContent: string
-  component: FC<Props>
-}
+  name: string;
+  mathContent: string;
+  component: FC<Props>;
+};
 
-
-export const buttonList: ButtonItem[] =  [
+export const buttonList: ButtonItem[] = [
   {
     name: 'percent',
     mathContent: '％',

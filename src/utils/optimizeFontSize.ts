@@ -6,10 +6,10 @@ export const optimizeFontSize = ({
   innerWidth,
   defaultFontSize,
 }: {
-  diff: number
-  element: HTMLElement
-  innerWidth: number
-  defaultFontSize: number
+  diff: number;
+  element: HTMLElement;
+  innerWidth: number;
+  defaultFontSize: number;
 }): void => {
   // childEle の親要素の padding が左右で 2% ずつなのを考慮
   let spanRatio = element.clientWidth / (innerWidth * (1 - 0.02 * 2));
@@ -18,11 +18,9 @@ export const optimizeFontSize = ({
   if (diff >= 0 && spanRatio >= 1) {
     fontSize = fontSize / spanRatio;
     element.style.fontSize = `${fontSize}px`;
-  // 文字が削除され、親要素の幅に余裕ができる場合、デフォルトサイズを超えない範囲で文字サイズ大きくする
+    // 文字が削除され、親要素の幅に余裕ができる場合、デフォルトサイズを超えない範囲で文字サイズ大きくする
   } else if (diff <= 0 && spanRatio < 1) {
-    fontSize = fontSize / spanRatio < defaultFontSize
-      ? fontSize /spanRatio
-      : defaultFontSize;
+    fontSize = fontSize / spanRatio < defaultFontSize ? fontSize / spanRatio : defaultFontSize;
     element.style.fontSize = `${fontSize}px`;
   }
-}
+};

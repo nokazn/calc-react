@@ -1,26 +1,21 @@
 import React, { useContext, FC, useEffect } from 'react';
 
-import { AppContext } from '../App';
-import { Button } from './Button';
+import { AppContext } from '../../../App';
+import { StyledUnaryOpeButton } from './UnaryOpeButton.style';
 
 type Props = {
-  name: string
-  mathContent: string
-}
+  name: string;
+  mathContent: string;
+  className?: string;
+};
 
 export const BackSpaceButton: FC<Props> = (props) => {
-  const {
-    provisionalNum,
-    provisionalTmpFormulaNum,
-    setProvisionalNum,
-  } = useContext(AppContext);
+  const { provisionalNum, provisionalTmpFormulaNum, setProvisionalNum } = useContext(AppContext);
 
   const onBackSpace = (): void => {
     if (provisionalTmpFormulaNum !== '') return;
 
-    const updatedProvisionalNum = provisionalNum.length === 1
-    ? '0'
-    : provisionalNum.slice(0, -1);
+    const updatedProvisionalNum = provisionalNum.length === 1 ? '0' : provisionalNum.slice(0, -1);
     setProvisionalNum(updatedProvisionalNum);
   };
 
@@ -34,15 +29,15 @@ export const BackSpaceButton: FC<Props> = (props) => {
 
     return () => {
       document.removeEventListener('keydown', eventListener);
-    }
+    };
   });
 
   return (
-    <Button
+    <StyledUnaryOpeButton
       name={props.name}
       mathContent={props.mathContent}
       handler={onBackSpace}
-      className={'unary-ope-button'}
+      className={props.className}
     />
   );
 };

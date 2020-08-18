@@ -1,15 +1,15 @@
 import React, { useContext, FC, useEffect } from 'react';
 
-import { AppContext } from '../App';
-import { Button } from './Button';
-import { enqueue } from '../utils/enqueue';
-import type { BinaryOpe } from '../types';
-import { isCalculatable } from '../utils/isCalculatable';
+import { AppContext } from '../../../App';
+import { StyledBiaryOpeButton } from './BinaryOpeButton.style';
+import { enqueue, isCalculatable } from '../../../utils';
+import type { BinaryOpe } from '../../../types';
 
 type Props = {
-  name: string
-  mathContent: string
-}
+  name: string;
+  mathContent: string;
+  className?: string;
+};
 
 export const BinaryOpeButton: FC<Props> = (props) => {
   const {
@@ -41,12 +41,12 @@ export const BinaryOpeButton: FC<Props> = (props) => {
       setTmpFormulaHistory({
         ...tmpFormulaHistory,
         nums: [...tmpFormulaHistory.nums, provisionalTmpFormulaNum || inputNum],
-      })
+      });
     }
     // @todo
     if (opes[1] !== '' && isCalculatable(enqueuedNums, opes[1])) {
-      calculate(enqueuedNums, opes[1])
-    };
+      calculate(enqueuedNums, opes[1]);
+    }
   };
 
   useEffect(() => {
@@ -59,15 +59,15 @@ export const BinaryOpeButton: FC<Props> = (props) => {
 
     return () => {
       document.removeEventListener('keydown', eventListener);
-    }
+    };
   });
 
   return (
-    <Button
+    <StyledBiaryOpeButton
       name={props.name}
       mathContent={props.mathContent}
       handler={onBinaryOpe}
-      className={'binary-ope-button'}
+      className={props.className}
     />
   );
 };

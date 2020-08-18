@@ -1,13 +1,14 @@
 import React, { useContext, FC, useEffect } from 'react';
 
-import { AppContext } from '../App';
-import { Button } from './Button';
-import { dequeue } from '../utils/dequeue';
+import { AppContext } from '../../../App';
+import { StyledUnaryOpeButton } from './UnaryOpeButton.style';
+import { dequeue } from '../../../utils';
 
 type Props = {
-  name: string
-  mathContent: string
-}
+  name: string;
+  mathContent: string;
+  className?: string;
+};
 
 export const ClearAllButton: FC<Props> = (props) => {
   const {
@@ -22,8 +23,8 @@ export const ClearAllButton: FC<Props> = (props) => {
   } = useContext(AppContext);
 
   const onClearAll = (): void => {
-    const dequeuedNums = dequeue(nums, 2)
-    const dequeuedOpes = dequeue(opes, 2)
+    const dequeuedNums = dequeue(nums, 2);
+    const dequeuedOpes = dequeue(opes, 2);
 
     setNums(dequeuedNums);
     setOpes(dequeuedOpes);
@@ -46,15 +47,15 @@ export const ClearAllButton: FC<Props> = (props) => {
 
     return () => {
       document.removeEventListener('keydown', eventListener);
-    }
+    };
   });
 
   return (
-    <Button
+    <StyledUnaryOpeButton
       name={props.name}
       mathContent={props.mathContent}
       handler={onClearAll}
-      className={'unary-ope-button'}
+      className={props.className}
     />
   );
 };
