@@ -6,9 +6,9 @@ import { enqueue, isCalculatable } from '../utils';
 import type { BinaryOpe } from '../types';
 
 type Props = {
-  name: string
-  mathContent: string
-}
+  name: string;
+  mathContent: string;
+};
 
 export const BinaryOpeButton: FC<Props> = (props) => {
   const {
@@ -40,12 +40,12 @@ export const BinaryOpeButton: FC<Props> = (props) => {
       setTmpFormulaHistory({
         ...tmpFormulaHistory,
         nums: [...tmpFormulaHistory.nums, provisionalTmpFormulaNum || inputNum],
-      })
+      });
     }
     // @todo
     if (opes[1] !== '' && isCalculatable(enqueuedNums, opes[1])) {
-      calculate(enqueuedNums, opes[1])
-    };
+      calculate(enqueuedNums, opes[1]);
+    }
   };
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export const BinaryOpeButton: FC<Props> = (props) => {
 
     return () => {
       document.removeEventListener('keydown', eventListener);
-    }
+    };
   });
 
   return (

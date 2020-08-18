@@ -5,9 +5,9 @@ import { Button } from './Button';
 import { enqueue } from '../utils';
 
 type Props = {
-  name: string
-  mathContent: string
-}
+  name: string;
+  mathContent: string;
+};
 
 export const EqualButton: FC<Props> = (props) => {
   const {
@@ -59,7 +59,7 @@ export const EqualButton: FC<Props> = (props) => {
 
     return () => {
       document.removeEventListener('keydown', eventListener);
-    }
+    };
   });
 
   return (

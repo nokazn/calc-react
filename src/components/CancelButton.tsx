@@ -4,15 +4,12 @@ import { AppContext } from '../App';
 import { Button } from './Button';
 
 type Props = {
-  name: string
-  mathContent: string
-}
+  name: string;
+  mathContent: string;
+};
 
 export const CancelButton: FC<Props> = (props) => {
-  const {
-    setProvisionalNum,
-    setProvisionalTmpFormulaNum,
-  } = useContext(AppContext);
+  const { setProvisionalNum, setProvisionalTmpFormulaNum } = useContext(AppContext);
 
   const onCancel = (): void => {
     setProvisionalNum('');
@@ -29,7 +26,7 @@ export const CancelButton: FC<Props> = (props) => {
 
     return () => {
       document.removeEventListener('keydown', eventListener);
-    }
+    };
   });
 
   return (

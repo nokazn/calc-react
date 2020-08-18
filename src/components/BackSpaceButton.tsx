@@ -4,23 +4,17 @@ import { AppContext } from '../App';
 import { Button } from './Button';
 
 type Props = {
-  name: string
-  mathContent: string
-}
+  name: string;
+  mathContent: string;
+};
 
 export const BackSpaceButton: FC<Props> = (props) => {
-  const {
-    provisionalNum,
-    provisionalTmpFormulaNum,
-    setProvisionalNum,
-  } = useContext(AppContext);
+  const { provisionalNum, provisionalTmpFormulaNum, setProvisionalNum } = useContext(AppContext);
 
   const onBackSpace = (): void => {
     if (provisionalTmpFormulaNum !== '') return;
 
-    const updatedProvisionalNum = provisionalNum.length === 1
-    ? '0'
-    : provisionalNum.slice(0, -1);
+    const updatedProvisionalNum = provisionalNum.length === 1 ? '0' : provisionalNum.slice(0, -1);
     setProvisionalNum(updatedProvisionalNum);
   };
 
@@ -34,7 +28,7 @@ export const BackSpaceButton: FC<Props> = (props) => {
 
     return () => {
       document.removeEventListener('keydown', eventListener);
-    }
+    };
   });
 
   return (

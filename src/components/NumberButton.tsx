@@ -6,15 +6,15 @@ import { Num } from '../types';
 import { enqueue } from '../utils';
 
 type Props = {
-  name: string
-  mathContent: string
-}
+  name: string;
+  mathContent: string;
+};
 
 const updateProvisionalNum = (prev: string, input: Num): string => {
   if (input === '.') {
-    return prev === '' ? '0.' : `${prev}.`
+    return prev === '' ? '0.' : `${prev}.`;
   }
-  return prev === '0' ? input : `${prev}${input}`
+  return prev === '0' ? input : `${prev}${input}`;
 };
 
 export const NumberButton: FC<Props> = (props) => {
@@ -37,7 +37,7 @@ export const NumberButton: FC<Props> = (props) => {
     const updatedProvisionalNum = updateProvisionalNum(provisionalNum, input);
     const updatedTmpFormulaHistory = {
       ...tmpFormulaHistory,
-      opes: [...tmpFormulaHistory.opes, enqueuedOpes[1]]
+      opes: [...tmpFormulaHistory.opes, enqueuedOpes[1]],
     };
 
     setProvisionalNum(updatedProvisionalNum);
@@ -59,7 +59,7 @@ export const NumberButton: FC<Props> = (props) => {
 
     return () => {
       document.removeEventListener('keydown', eventListener);
-    }
+    };
   });
 
   return (
@@ -67,9 +67,7 @@ export const NumberButton: FC<Props> = (props) => {
       name={props.name}
       mathContent={props.mathContent}
       handler={onNum}
-      className={props.name === '.'
-        ? 'unary-ope-button'
-        : 'num-button'}
+      className={props.name === '.' ? 'unary-ope-button' : 'num-button'}
     />
   );
 };
