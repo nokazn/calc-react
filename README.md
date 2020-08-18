@@ -1,9 +1,9 @@
 # calc-react
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/71e0b35a-9679-4452-a9dd-6f001418a2db/deploy-status)](https://app.netlify.com/sites/nokazn-calc-vue-cdn/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6afc596f-173f-458e-991a-0e10265e3ad5/deploy-status)](https://app.netlify.com/sites/nokazn-calc-react/deploys)
 
 - A simple calculator built with React (hooks) + styled-components.
-- A sample site is deployed by Netlify [here](https://nokazn-calc-vue-cdn.netlify.app/).
+- A sample site is deployed by Netlify [here](https://nokazn-calc-react.netlify.app/).
 
 ## usage
 
