@@ -42,7 +42,7 @@
     "typescript": "^4.0.2"
   },
   "devDependencies": {
-    "prettier": "^2.1.1"
+    "prettier": "^2.1.2"
   },
   "resolutions": {
     "styled-components": "^5"
